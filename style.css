@@ -1,0 +1,179 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+    
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px; /* ή όσο ψηλό είναι το navbar σου */
+  }
+
+    /* Footer */
+.footer {
+    background-color: #343a40;
+    position: relative;
+    width: 100%;
+    padding: 1rem;
+    text-align: center;
+    color: #fff;
+  }
+  
+  .footer-link {
+    color: #ccc;
+    margin: 0 10px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  .footer-link:hover,
+  .footer-link.active {
+    color: #ffc107;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+
+    .logo {
+    width: 250px;
+    height: 70px;
+    border-radius: 70px; 
+    object-fit: cover; /* Καλύπτει το πλαίσιο χωρίς παραμόρφωση */
+    object-position: center; /* Εστιάζει στο κέντρο */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Ομαλή μετάβαση */
+    cursor: pointer; /* Δείχνει ότι είναι κλικ-άμπλ */
+    }
+
+    .logo:hover {
+        transform: scale(1.1); /* Ελαφρύ zoom */
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Προσθήκη σκιάς */
+    }
+
+
+    .navbar-nav .nav-link {
+        color: #fff !important;
+    }
+    .navbar-nav .nav-link:hover {
+        color: #ffc107 !important;
+    }
+    .navbar-toggler {
+        border-color: #ffc107;
+    }
+
+
+    /* Form Section */
+.form-section {
+    padding: 2rem;
+    border-radius: 10px;
+    margin-top: 4rem;
+  }
+
+
+  /* Form Fields Styling */
+.form-label {
+    color: rgb(3, 3, 3);
+  }
+  
+  /* Buttons */
+  button[type="submit"] {
+    width: 100%;
+  }
+
+  /* Make the form inputs responsive */
+@media (max-width: 768px) {
+    .form-section {
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+  
+    .deadline {
+      font-size: 1rem;
+    }
+  
+    .form-label {
+      font-size: 0.9rem;
+    }
+  
+    .form-control, .form-select {
+      font-size: 0.9rem;
+    }
+  }
+
+/* Στοιχίζουμε το κείμενο του About μέσα στην εικόνα */
+#about {
+  height: 100vh;  /* Ορίζουμε ύψος για το τμήμα */
+  background: url('https://montana.gr/wp-content/uploads/2020/08/montana-hotel-spa-karpenisi-evritania-2-1024x768.jpg') center/cover no-repeat;
+  position: relative;
+  color: white;
+}
+
+#about .position-absolute {
+  background-color: rgba(0, 0, 0, 0.6);  /* Σκοτεινό overlay για αντίθεση */
+}
+
+.text-overlay {
+  position: relative;
+  z-index: 2;  /* Εξασφαλίζουμε ότι το κείμενο θα είναι πάνω από το overlay */
+  padding-left: 30px;  /* Δίνουμε λίγο απόσταση από την αριστερή πλευρά */
+  max-width: 60%;  /* Περιορίζουμε το πλάτος του κειμένου */
+}
+
+.about-text {
+  text-align: left;  /* Στοιχίζουμε το κείμενο αριστερά */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);  /* Προσθήκη σκιάς για καλύτερη αντίθεση */
+}
+
+.about-text h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.about-text p {
+  font-size: 1.2rem;
+}
+
+#countdown {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #ffc107;
+  text-shadow: 2px 2px 4px #000;
+  animation: pulse 2s infinite;
+}
+
+/* Optional: pulsing animation */
+@keyframes pulse {
+  0% { opacity: 0.8; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+  100% { opacity: 0.8; transform: scale(1); }
+}
+
+
+.card.h-100 {
+  max-width: 280px;
+  margin: 0 auto;
+  border-radius: 1rem; /* πιο στρογγυλεμένες γωνίες */
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-img-top {
+  height: 250px;
+  object-fit: cover;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+
+.card-body {
+  padding: 1rem;
+  min-height: 180px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+#highlights .carousel-inner .carousel-item img {
+  height: 60vh;           /* 30% του ύψους οθόνης */
+  object-fit: cover;
+}
