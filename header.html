@@ -1,46 +1,60 @@
 <nav class="navbar navbar-expand-lg fixed-top glass-navbar">
   <div class="container">
-    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+
+    <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav d-flex flex-row flex-wrap justify-content-center w-100 overflow-auto">
-        <li class="nav-item"><a class="nav-link text-white px-3" href="index.html#home">Home</a></li>
-        <li class="nav-item"><a class="nav-link text-white px-3" href="index.html#about">About</a></li>
-        <li class="nav-item"><a class="nav-link text-white px-3" href="index.html#coaches">Coaches</a></li>
-        <li class="nav-item"><a class="nav-link text-white px-3" href="index.html#highlights">Highlights</a></li>
-        <li class="nav-item"><a class="nav-link text-white px-3" href="index.html#contact">Contact</a></li>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link text-white" href="index.html#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="index.html#about">About</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="index.html#coaches">Coaches</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="index.html#highlights">Highlights</a></li>
+        <li class="nav-item"><a class="nav-link text-white" href="index.html#contact">Contact</a></li>
         <li class="nav-item"><a class="btn btn-warning ms-2" href="register.html">Register</a></li>
       </ul>
     </div>
   </div>
 </nav>
 
-
-
 <style>
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+  }
+
+  .navbar-toggler:focus {
+    box-shadow: none;
+  }
+
+
   /* Glass Effect */
   .glass-navbar {
     backdrop-filter: blur(15px);
-    background-color: rgba(13, 13, 13, 0.236);
+    background-color: rgba(0, 0, 0, 0.3);
     transition: background-color 0.3s ease;
   }
 
 
-  /* Μετακινεί το κουμπί πάνω αριστερά */
   .custom-toggler {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    z-index: 1000;
+    position: relative;
+    margin-right: 15px; /* Το μετακινεί δεξιά */
   }
 
-  /* Responsive βελτιώσεις */
+  /* Τα links εμφανίζονται κάθετα */
+  .navbar-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Βελτιώσεις για κινητά */
   @media (max-width: 768px) {
-    .custom-toggler {
-      top: 10px;
-      right: 10px;
+    .glass-navbar {
+      background-color: rgba(0, 0, 0, 0.5);
     }
   }
 </style>
+
+
+

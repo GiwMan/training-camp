@@ -442,18 +442,23 @@
 
 <script async src="//www.instagram.com/embed.js"></script>
 <script>
+  // Κλείσιμο navbar όταν πατάς σε link
+  document.querySelectorAll('.navbar-nav .nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      const navbar = document.querySelector('.navbar-collapse.show');
+      if (navbar) {
+        bootstrap.Collapse.getInstance(navbar)?.hide();
+      }
+    });
+  });
+
+  // Κλείσιμο navbar όταν πατάς εκτός
   document.addEventListener('click', function (event) {
-    const navbar = document.querySelector('.navbar-collapse');
+    const navbar = document.querySelector('.navbar-collapse.show');
     const toggler = document.querySelector('.navbar-toggler');
 
-    const isOpen = navbar.classList.contains('show');
-    const clickedInsideNavbar = navbar.contains(event.target);
-    const clickedToggler = toggler.contains(event.target);
-
-    if (isOpen && !clickedInsideNavbar && !clickedToggler) {
-      // Χρησιμοποιεί Bootstrap collapse API για να κλείσει σωστά
-      const bsCollapse = bootstrap.Collapse.getInstance(navbar);
-      bsCollapse.hide();
+    if (navbar && !navbar.contains(event.target) && !toggler.contains(event.target)) {
+      bootstrap.Collapse.getInstance(navbar)?.hide();
     }
   });
 </script>
