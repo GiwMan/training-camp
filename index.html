@@ -412,7 +412,12 @@
   countdown();
   setInterval(countdown, 1000);
 </script>
-
+<script>
+  document.querySelector('#about').addEventListener('click', function() {
+    var myCarousel = new bootstrap.Carousel(document.getElementById('aboutCarousel'));
+    myCarousel.to(0); // Επαναφορά στο πρώτο slide
+  });
+</script>
 
 <script async src="//www.instagram.com/embed.js"></script>
 <script>
