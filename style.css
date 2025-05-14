@@ -61,6 +61,32 @@
     }
 
 
+    /* Αφαιρεί το περίγραμμα όταν το πατάς */
+    .navbar-toggler:focus {
+      box-shadow: none;
+    } 
+
+    .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+
+  .hero-section {
+    padding: 20px;
+    text-align: center;
+  }
+
+  .hero-section img {
+    max-width: 80%;
+  }
+
+  .btn-lg {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+
+
+
     /* Form Section */
 .form-section {
     padding: 2rem;

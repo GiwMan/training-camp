@@ -17,27 +17,30 @@
   </div>
 </nav>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const navbar = document.getElementById("navbarNav");
-    const toggler = document.querySelector(".navbar-toggler");
 
-    navbar.addEventListener("click", function () {
-      if (navbar.classList.contains("show")) {
-        toggler.click(); // Κλείνει το navbar όταν γίνεται κλικ πάνω του
-      }
-    });
-  });
-</script>
 
 <style>
+  /* Glass Effect */
   .glass-navbar {
-    backdrop-filter: blur(10px);
-    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(15px);
+    background-color: rgba(13, 13, 13, 0.236);
     transition: background-color 0.3s ease;
   }
+
+
+  /* Μετακινεί το κουμπί πάνω αριστερά */
+  .custom-toggler {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 1000;
+  }
+
+  /* Responsive βελτιώσεις */
+  @media (max-width: 768px) {
+    .custom-toggler {
+      top: 10px;
+      right: 10px;
+    }
+  }
 </style>
-
-  
-
-  
