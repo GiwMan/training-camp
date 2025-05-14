@@ -88,7 +88,7 @@
 
   <!-- Carousel -->
   <div class="container position-relative z-2" data-aos="fade-up" data-aos-delay="1000">
-    <div id="aboutCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="8000">
+    <div id="aboutCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
       <div class="carousel-inner">
         <!-- Slide 1: About the Camp -->
         <div class="carousel-item active">
@@ -349,8 +349,9 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
   AOS.init({
-    duration: 1000,
-    once: true
+    duration: 800,
+    once: false,
+    easing: 'ease-in-out',
   });
 </script>
 <!-- Lightbox2 JS -->
@@ -414,5 +415,14 @@
 
 
 <script async src="//www.instagram.com/embed.js"></script>
+<script>
+ if (window.location.hash) {
+  history.replaceState(null, null, window.location.pathname);
+ }
+
+ window.addEventListener('beforeunload', function() {
+  window.scrollTo(0, 0);
+ });
+</script>
 </body>
 </html>
