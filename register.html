@@ -272,6 +272,22 @@
     });
   });
 </script>
+<script>
+  document.addEventListener('click', function (event) {
+    const navbar = document.querySelector('.navbar-collapse');
+    const toggler = document.querySelector('.navbar-toggler');
+
+    const isOpen = navbar.classList.contains('show');
+    const clickedInsideNavbar = navbar.contains(event.target);
+    const clickedToggler = toggler.contains(event.target);
+
+    if (isOpen && !clickedInsideNavbar && !clickedToggler) {
+      // Χρησιμοποιεί Bootstrap collapse API για να κλείσει σωστά
+      const bsCollapse = bootstrap.Collapse.getInstance(navbar);
+      bsCollapse.hide();
+    }
+  });
+</script>
 
 </body>
 </html>

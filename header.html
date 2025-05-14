@@ -1,23 +1,34 @@
 <nav class="navbar navbar-expand-lg fixed-top glass-navbar">
   <div class="container">
-    <!-- <a class="navbar-brand" href="index.html#home">
-        <img src="img/smtt-logo-Apr25white.png" alt="Logo" class="img-fluid logo">
-    </a> -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link text-white" href="index.html#home">Home</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="index.html#about">About</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="index.html#coaches">Coaches</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="index.html#highlights">Highlights</a></li>
-        <li class="nav-item"><a class="nav-link text-white" href="index.html#contact">Contact</a></li>
+      <ul class="navbar-nav d-flex flex-row flex-wrap justify-content-center w-100 overflow-auto">
+        <li class="nav-item"><a class="nav-link text-white px-3" href="index.html#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link text-white px-3" href="index.html#about">About</a></li>
+        <li class="nav-item"><a class="nav-link text-white px-3" href="index.html#coaches">Coaches</a></li>
+        <li class="nav-item"><a class="nav-link text-white px-3" href="index.html#highlights">Highlights</a></li>
+        <li class="nav-item"><a class="nav-link text-white px-3" href="index.html#contact">Contact</a></li>
         <li class="nav-item"><a class="btn btn-warning ms-2" href="register.html">Register</a></li>
       </ul>
     </div>
   </div>
 </nav>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const navbar = document.getElementById("navbarNav");
+    const toggler = document.querySelector(".navbar-toggler");
+
+    navbar.addEventListener("click", function () {
+      if (navbar.classList.contains("show")) {
+        toggler.click(); // Κλείνει το navbar όταν γίνεται κλικ πάνω του
+      }
+    });
+  });
+</script>
 
 <style>
   .glass-navbar {
