@@ -129,9 +129,15 @@
       </select>
     </div>
 
-    <div class="col-12">
-      <button type="submit" class="btn btn-success w-100">Submit</button>
+    <div class="col-12 text-center">
+    <button id="submitBtn" type="submit" class="btn btn-success w-100">
+      Register
+    </button>
+    <div id="spinner" class="spinner-border text-success mt-3" role="status" style="display: none;">
+      <span class="visually-hidden">Submitting...</span>
     </div>
+  </div>
+
     <div id="successMessage" class="alert alert-success mt-3 d-none text-center">
       ✅ Η εγγραφή σας πραγματοποιήθηκε επιτυχώς! Θα ενημερωθείτε άμεσα με email επιβεβαίωσης της εγγραφής σας.
     </div>
@@ -203,9 +209,14 @@
     const successMessage = document.getElementById('successMessage');
 
     form.addEventListener('submit', function (event) {
-      event.preventDefault();
+    event.preventDefault();
 
-      const data = {
+    const submitBtn = document.getElementById('submitBtn');
+    const spinner = document.getElementById('spinner');
+    submitBtn.disabled = true;
+    spinner.style.display = 'inline-block';
+
+    const data = {
       firstName: document.getElementById('firstName').value,
       lastName: document.getElementById('lastName').value,
       email: document.getElementById('email').value,
@@ -217,26 +228,31 @@
       status: document.getElementById('status').value,
       distinction: document.getElementById('distinction').value,
       category: document.getElementById('category').value,
-      transportation: document.getElementById('transportation').value, // 💡 Προσαρμοσμένο id
+      transportation: document.getElementById('transportation').value,
     };
 
-      fetch('https://script.google.com/macros/s/AKfycbxbAQdNcT4nqdqb2g8mnG0CKb6fv7bki2w4-RDLPQobDZ1hH4_PHSpm_TpdAieHleQC/exec', {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data),
-      })
-      .then(() => {
-        successMessage.innerText = "✅ Your registration was successful! You will be notified shortly with a confirmation email.";
-        successMessage.classList.remove('d-none');
-        form.reset();
-      })
-      .catch(err => {
-          alert('⚠ Σφάλμα υποβολής: ' + err.message);
-      });
+    fetch('https://script.google.com/macros/s/AKfycbxbAQdNcT4nqdqb2g8mnG0CKb6fv7bki2w4-RDLPQobDZ1hH4_PHSpm_TpdAieHleQC/exec', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+    })
+    .then(() => {
+      successMessage.innerText = "✅ Your registration was successful! You will be notified shortly with a confirmation email.";
+      successMessage.classList.remove('d-none');
+      form.reset();
+    })
+    .catch(err => {
+      alert('⚠ Σφάλμα υποβολής: ' + err.message);
+    })
+    .finally(() => {
+      submitBtn.disabled = false;
+      spinner.style.display = 'none';
     });
+  });
+
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
