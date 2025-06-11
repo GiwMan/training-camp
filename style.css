@@ -209,3 +209,36 @@
   height: 60vh;           /* 30% του ύψους οθόνης */
   object-fit: cover;
 }
+
+
+.section-title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2em;
+  color: #222;
+}
+
+.blog-content h3 {
+  margin-top: 20px;
+  color: #333;
+}
+
+.blog-content ul {
+  padding-left: 20px;
+  margin-top: 10px;
+}
+
+.button {
+  background-color: #0088cc;
+  color: white;
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  display: inline-block;
+  transition: background 0.3s ease;
+}
+
+.button:hover {
+  background-color: #005fa3;
+}
