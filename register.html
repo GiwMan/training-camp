@@ -35,33 +35,35 @@
 
   <div class="container">
     <div class="form-section">
-      <form id="registrationForm" netlify>
+      <form id="registrationForm" name="registration" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+  <input type="hidden" name="form-name" value="registration" />
+  <p style="display:none"><label>Don't fill this out: <input name="bot-field" /></label></p>
   <div class="row g-3">
     <div class="col-md-6">
       <label for="firstName" class="form-label">First Name</label>
-      <input type="text" class="form-control" id="firstName" required>
+      <input type="text" class="form-control" id="firstName" name="firstName" required>
     </div>
     <div class="col-md-6">
       <label for="lastName" class="form-label">Last Name</label>
-      <input type="text" class="form-control" id="lastName" required>
+      <input type="text" class="form-control" id="lastName" name="lastName" required>
     </div>
 
     <div class="col-md-6">
       <label for="email" class="form-label">Email</label>
-      <input type="email" class="form-control" id="email" required>
+      <input type="email" class="form-control" id="email" name="email" required>
     </div>
     <div class="col-md-6">
       <label for="phone" class="form-label">Phone</label>
-      <input type="tel" class="form-control" id="phone" required>
+      <input type="tel" class="form-control" id="phone" name="phone" required>
     </div>
 
     <div class="col-md-6">
       <label for="age" class="form-label">Age</label>
-      <input type="text" class="form-control" id="age" required>
+      <input type="text" class="form-control" id="age" name="age" required>
     </div>
     <div class="col-md-6">
       <label for="category" class="form-label">Category</label>
-      <select class="form-select" id="category" required>
+      <select class="form-select" id="category" name="category" required>
         <option value="">Select Category</option>
         <option value="Kids">Kids</option>
         <option value="Cadets">Cadets</option>
@@ -72,7 +74,7 @@
 
     <div class="col-md-6">
       <label for="status" class="form-label">Status</label>
-      <select class="form-select" id="status" required>
+      <select class="form-select" id="status" name="status" required>
         <option value="">Select Status</option>
         <option value="Athlete">Athlete</option>
         <option value="Coach">Coach</option>
@@ -81,7 +83,7 @@
     </div>
     <div class="col-md-6">
       <label for="tshirt" class="form-label">Tshirts</label>
-      <select class="form-select" id="tshirt" required>
+      <select class="form-select" id="tshirt" name="tshirt" required>
         <option value="">Select size</option>
         <option value="XS">XS</option>
         <option value="S">S</option>
@@ -95,7 +97,7 @@
     <!-- Athlete Distinction - Hidden Initially -->
     <div class="col-md-6" id="athlete-options" style="display: none;">
       <label for="distinction" class="form-label">Highest Distinction</label>
-      <select class="form-select" id="distinction">
+      <select class="form-select" id="distinction" name="distinction">
         <option value="">Select Distinction</option>
         <option value="Olympic">Olympic</option>
         <option value="World">World</option>
@@ -109,24 +111,33 @@
 
     <div class="col-md-6">
       <label for="club" class="form-label">Athletic Club</label>
-      <input type="text" class="form-control" id="club" required>
+      <input type="text" class="form-control" id="club" name="club" required>
     </div>
 
     <div class="col-md-6">
       <label for="country-input" class="form-label">Country</label>
-      <input type="text" class="form-control" id="country-input" placeholder="Type to search..." onkeyup="filterCountries()" required>
+      <input type="text" class="form-control" id="country-input" name="country" placeholder="Type to search..." onkeyup="filterCountries()" required>
       <ul id="country-suggestions" class="list-group" style="display: none; position: absolute; z-index: 1000;"></ul>
     </div>
 
     <div class="col-md-6">
       <label for="transportation" class="form-label">Transportation</label>
-      <select class="form-select" id="transportation" required>
+      <select class="form-select" id="transportation" name="transportation" required>
         <option value="">Select transportation</option>
         <option value="AthenToKarpenisiAndBack">Athens to Karpenisi and back</option>
         <option value="AthentsToKarpenisi">Athens to Karpenisi</option>
         <option value="KarpenisiToAthens">Karpenisi to Athens</option>
         <option value="None">None</option>
       </select>
+    </div>
+
+    <div class="col-12">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="consent" name="consent" value="yes" required>
+        <label class="form-check-label" for="consent">
+          I consent to the collection and processing of my personal data for the purpose of registering for the Summer Mountain Taekwondo Training Camp 2026, in accordance with GDPR regulations.
+        </label>
+      </div>
     </div>
 
     <div class="col-12 text-center">
@@ -216,33 +227,19 @@
     submitBtn.disabled = true;
     spinner.style.display = 'inline-block';
 
-    const data = {
-      firstName: document.getElementById('firstName').value,
-      lastName: document.getElementById('lastName').value,
-      email: document.getElementById('email').value,
-      phone: document.getElementById('phone').value,
-      country: document.getElementById('country-input').value,      
-      age: document.getElementById('age').value,
-      club: document.getElementById('club').value,
-      tshirt: document.getElementById('tshirt').value,
-      status: document.getElementById('status').value,
-      distinction: document.getElementById('distinction').value,
-      category: document.getElementById('category').value,
-      transportation: document.getElementById('transportation').value,
-    };
-
-    fetch('https://script.google.com/macros/s/AKfycbxbAQdNcT4nqdqb2g8mnG0CKb6fv7bki2w4-RDLPQobDZ1hH4_PHSpm_TpdAieHleQC/exec', {
+    fetch('/', {
       method: 'POST',
-      mode: 'no-cors',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data),
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(form)).toString(),
     })
-    .then(() => {
-      successMessage.innerText = "✅ Your registration was successful! You will be notified shortly with a confirmation email.";
-      successMessage.classList.remove('d-none');
-      form.reset();
+    .then((response) => {
+      if (response.ok) {
+        successMessage.innerText = "✅ Your registration was successful! You will be notified shortly with a confirmation email.";
+        successMessage.classList.remove('d-none');
+        form.reset();
+      } else {
+        alert('⚠ Submission failed. Please try again or contact us directly.');
+      }
     })
     .catch(err => {
       alert('⚠ Σφάλμα υποβολής: ' + err.message);
