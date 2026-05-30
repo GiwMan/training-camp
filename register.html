@@ -8,7 +8,6 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
-
     .form-section {
       padding: 6rem;
       border-radius: 10px;
@@ -75,53 +74,93 @@
       </select>
     </div>
 
-    <div class="col-md-6">
-      <label for="status" class="form-label">Status</label>
-      <select class="form-select" id="status" name="status" required>
-        <option value="">Select Status</option>
-        <option value="Athlete">Athlete</option>
-        <option value="Coach">Coach</option>
-        <option value="Assistant">Assistant</option>
-      </select>
-    </div>
-    <div class="col-md-6">
-      <label for="tshirt" class="form-label">Tshirts</label>
-      <select class="form-select" id="tshirt" name="tshirt" required>
-        <option value="">Select size</option>
-        <option value="XS">XS</option>
-        <option value="S">S</option>
-        <option value="M">M</option>
-        <option value="L">L</option>
-        <option value="XL">XL</option>
-        <option value="XXL">XXL</option>
-      </select>
-    </div>
+          <div class="col-md-6">
+            <label for="status" class="form-label">Status</label>
+            <select class="form-select" id="status" name="status" required>
+              <option value="">Select Status</option>
+              <option value="Athlete">Athlete</option>
+              <option value="Coach">Coach</option>
+              <option value="Assistant">Assistant</option>
+            </select>
+          </div>
 
-    <!-- Athlete Distinction - Hidden Initially -->
-    <div class="col-md-6" id="athlete-options" style="display: none;">
-      <label for="distinction" class="form-label">Highest Distinction</label>
-      <select class="form-select" id="distinction" name="distinction">
-        <option value="">Select Distinction</option>
-        <option value="Olympic">Olympic</option>
-        <option value="World">World</option>
-        <option value="European">European</option>
-        <option value="G2">G2</option>
-        <option value="G1">G1</option>
-        <option value="Nationals">Nationals</option>
-        <option value="Other">Other</option>
-      </select>
-    </div>
+          <div id="athlete-options-container" style="display: none;">
+          <div class="row"> <div class="col-md-6 mb-3">
+              <label for="category" class="form-label">Category</label>
+              <select class="form-select" id="category" name="category" required>
+                <option value="">Select Category</option>
+                <option value="Kids">Kids</option>
+                <option value="Cadets">Cadets</option>
+                <option value="Juniors">Juniors</option>
+                <option value="Seniors">Seniors</option>
+              </select>
+            </div>
 
-    <div class="col-md-6">
-      <label for="club" class="form-label">Athletic Club</label>
-      <input type="text" class="form-control" id="club" name="club" required>
-    </div>
+            <div class="col-md-6 mb-3">
+              <label for="distinction" class="form-label">Highest Distinction</label>
+              <select class="form-select" id="distinction" name="distinction">
+                <option value="">Select Distinction</option>
+                <option value="Olympic">Olympic</option>
+                <option value="World">World</option>
+                <option value="European">European</option>
+                <option value="G2">G2</option>
+                <option value="G1">G1</option>
+                <option value="Nationals">Nationals</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
 
-    <div class="col-md-6">
-      <label for="country-input" class="form-label">Country</label>
-      <input type="text" class="form-control" id="country-input" name="country" placeholder="Type to search..." onkeyup="filterCountries()" required>
-      <ul id="country-suggestions" class="list-group" style="display: none; position: absolute; z-index: 1000;"></ul>
-    </div>
+          </div>
+        </div>
+          
+          <div class="col-md-6">
+            <label for="tshirt" class="form-label">Tshirts</label>
+            <select class="form-select" id="tshirt" name="tshirt" required>
+              <option value="">Select size</option>
+              <option value="YS">YS (6-8 years old)</option>
+              <option value="YM">YM (8-10 years old)</option>
+              <option value="YL">YL (10-12 years old)</option>
+              <option value="YXL">YXL (12-14 years old)</option>
+              <option value="YXXL">YXXL (14-16 years old)</option>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <label for="club" class="form-label">Athletic Club</label>
+            <input type="text" class="form-control" id="club" name="club" maxlength="100" required>
+          </div>
+
+          <!-- Χώρα: Select Dropdown για μεγαλύτερη ασφάλεια -->
+          <div class="col-md-6">
+            <label for="country-input" class="form-label">Country</label>
+            <!-- Το list="country-options" συνδέει το input με το datalist από κάτω -->
+            <input type="text" class="form-control" id="country-input" name="country" list="country-options" placeholder="Type to search..." required>
+            
+            <datalist id="country-options">
+              <option value="Greece"></option>
+              <option value="Cyprus"></option>
+              <option value="United States"></option>
+              <option value="United Kingdom"></option>
+              <option value="Germany"></option>
+              <option value="France"></option>
+              <option value="Italy"></option>
+              <option value="Spain"></option>
+              <option value="Canada"></option>
+              <option value="Australia"></option>
+              <option value="Brazil"></option>
+              <option value="Turkey"></option>
+              <option value="Serbia"></option>
+              <option value="Bulgaria"></option>
+              <option value="Romania"></option>
+              <option value="Albania"></option>
+              <option value="North Macedonia"></option>
+            </datalist>
+          </div>
 
     <div class="col-md-6">
       <label for="transportation" class="form-label">Transportation</label>
@@ -207,24 +246,17 @@
     });
   </script>
   <script>
-    // Εμφάνιση distinction μόνο για Athletes
+    // 1. Εμφάνιση distinction , category μόνο για Athletes
     document.getElementById("status").addEventListener("change", function () {
-      const athleteOptions = document.getElementById("athlete-options");
-      if (this.value === "Athlete") {
-        athleteOptions.style.display = "block";
-      } else {
-        athleteOptions.style.display = "none";
-      }
-    });
-  </script>
+    const athleteOptionsContainer = document.getElementById("athlete-options-container");
+    
+    // Shows or hides the entire wrapper container
+    athleteOptionsContainer.style.display = this.value === "Athlete" ? "block" : "none";
+  });
 
-  <script>
+    // 2. Υποβολή στο Google Apps Script
     const form = document.getElementById('registrationForm');
     const successMessage = document.getElementById('successMessage');
-
-    form.addEventListener('submit', function (event) {
-    event.preventDefault();
-
     const submitBtn = document.getElementById('submitBtn');
     const spinner = document.getElementById('spinner');
     submitBtn.disabled = true;
@@ -300,16 +332,14 @@
     });
   });
 
-  // Κλείσιμο navbar όταν πατάς εκτός
-  document.addEventListener('click', function (event) {
-    const navbar = document.querySelector('.navbar-collapse.show');
-    const toggler = document.querySelector('.navbar-toggler');
-
-    if (navbar && !navbar.contains(event.target) && !toggler.contains(event.target)) {
-      bootstrap.Collapse.getInstance(navbar)?.hide();
-    }
-  });
-</script>
-
+      document.addEventListener('click', function (event) {
+        const navbar = document.querySelector('.navbar-collapse.show');
+        const toggler = document.querySelector('.navbar-toggler');
+        if (navbar && !navbar.contains(event.target) && toggler && !toggler.contains(event.target)) {
+          bootstrap.Collapse.getInstance(navbar)?.hide();
+        }
+      });
+    });
+  </script>
 </body>
 </html>
