@@ -86,17 +86,6 @@
 
           <div id="athlete-options-container" style="display: none;">
           <div class="row"> <div class="col-md-6 mb-3">
-              <label for="category" class="form-label">Category</label>
-              <select class="form-select" id="category" name="category" required>
-                <option value="">Select Category</option>
-                <option value="Kids">Kids</option>
-                <option value="Cadets">Cadets</option>
-                <option value="Juniors">Juniors</option>
-                <option value="Seniors">Seniors</option>
-              </select>
-            </div>
-
-            <div class="col-md-6 mb-3">
               <label for="distinction" class="form-label">Highest Distinction</label>
               <select class="form-select" id="distinction" name="distinction">
                 <option value="">Select Distinction</option>
@@ -201,51 +190,6 @@
   </div>
 
   <script>
-    const countries = [
-      "Greece", "Cyprus", "United States", "United Kingdom", "Germany", "France", "Italy", "Spain",
-      "Canada", "Australia", "Brazil", "Turkey", "Serbia", "Bulgaria", "Romania", "Albania", "North Macedonia"
-    ];
-  
-    const input = document.getElementById("country-input");
-    const suggestionsList = document.getElementById("country-suggestions");
-  
-    // Συνάρτηση για φιλτράρισμα των χωρών με βάση το input
-    function filterCountries() {
-      const searchTerm = input.value.toLowerCase();
-      
-      // Καθαρίζουμε τις υπάρχουσες προτάσεις
-      suggestionsList.innerHTML = '';
-  
-      if (searchTerm) {
-        const filteredCountries = countries.filter(country => country.toLowerCase().includes(searchTerm));
-        
-        // Προσθέτουμε τις φιλτραρισμένες χώρες στην λίστα προτάσεων
-        filteredCountries.forEach(country => {
-          const listItem = document.createElement("li");
-          listItem.classList.add("list-group-item");
-          listItem.textContent = country;
-          listItem.onclick = function() {
-            input.value = country;  // Οριστικοποιούμε την επιλογή
-            suggestionsList.style.display = "none"; // Κλείνουμε τις προτάσεις
-          };
-          suggestionsList.appendChild(listItem);
-        });
-        
-        // Εμφανίζουμε τις προτάσεις αν υπάρχουν φιλτραρισμένα αποτελέσματα
-        suggestionsList.style.display = filteredCountries.length > 0 ? "block" : "none";
-      } else {
-        suggestionsList.style.display = "none";
-      }
-    }
-  
-    // Κλείσιμο της λίστας προτάσεων όταν ο χρήστης κάνει κλικ εκτός
-    document.addEventListener("click", function(event) {
-      if (!input.contains(event.target) && !suggestionsList.contains(event.target)) {
-        suggestionsList.style.display = "none";
-      }
-    });
-  </script>
-  <script>
     // 1. Εμφάνιση distinction , category μόνο για Athletes
     document.getElementById("status").addEventListener("change", function () {
     const athleteOptionsContainer = document.getElementById("athlete-options-container");
@@ -259,32 +203,35 @@
     const successMessage = document.getElementById('successMessage');
     const submitBtn = document.getElementById('submitBtn');
     const spinner = document.getElementById('spinner');
-    submitBtn.disabled = true;
-    spinner.style.display = 'inline-block';
 
-    fetch('/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams(new FormData(form)).toString(),
-    })
-    .then((response) => {
-      if (response.ok) {
-        successMessage.innerText = "✅ Your registration was successful! You will be notified shortly with a confirmation email.";
-        successMessage.classList.remove('d-none');
-        successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        form.reset();
-      } else {
-        alert('⚠ Submission failed. Please try again or contact us directly.');
-      }
-    })
-    .catch(err => {
-      alert('⚠ Submission error: ' + err.message);
-    })
-    .finally(() => {
-      submitBtn.disabled = false;
-      spinner.style.display = 'none';
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      spinner.style.display = 'inline-block';
+
+      fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(new FormData(form)).toString(),
+      })
+      .then((response) => {
+        if (response.ok) {
+          successMessage.innerText = "✅ Your registration was successful! You will be notified shortly with a confirmation email.";
+          successMessage.classList.remove('d-none');
+          successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          form.reset();
+        } else {
+          alert('⚠ Submission failed. Please try again or contact us directly.');
+        }
+      })
+      .catch(err => {
+        alert('⚠ Submission error: ' + err.message);
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+        spinner.style.display = 'none';
+      });
     });
-  });
 
   </script>
 
@@ -339,7 +286,6 @@
           bootstrap.Collapse.getInstance(navbar)?.hide();
         }
       });
-    });
   </script>
 </body>
 </html>
