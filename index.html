@@ -97,7 +97,7 @@
 <body>
   <div id="header-placeholder"></div>
   <section id="home" class="d-flex flex-column align-items-center justify-content-center text-center text-white position-relative"
-         style="height: 100vh; background: url('https://montana.gr/wp-content/uploads/2020/08/montana-hotel-spa-karpenisi-evritania-2-1024x768.jpg') center center / cover no-repeat;">
+         style="min-height: 100vh; padding: 110px 16px 80px; background: url('https://montana.gr/wp-content/uploads/2020/08/montana-hotel-spa-karpenisi-evritania-2-1024x768.jpg') center center / cover no-repeat;">
 
   <!-- Σκοτεινό Overlay -->
   <div class="position-absolute top-0 start-0 w-100 h-100" style="background-color: rgba(0, 0, 0, 0.6);"></div>
@@ -136,8 +136,8 @@
   /* Καλύτερη προσαρμογή σε κινητά */
   @media (max-width: 768px) {
     #home {
-      height: 100vh;
-      padding: 20px;
+      min-height: 100vh;
+      padding: 90px 16px 60px;
     }
 
     .logo-img {
