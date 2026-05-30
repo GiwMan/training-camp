@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://summermountaincamp-tkd.com/sitemap.xml
+Sitemap: https://summermountaincamp-tkd26.netlify.app/sitemap.xml
