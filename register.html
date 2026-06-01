@@ -153,31 +153,29 @@
 
             <div class="col-md-6">
               <label for="country-input" class="form-label">Country</label>
-              <input type="text" class="form-control" id="country-input" name="country" list="country-options"
-                placeholder="Type to search..." required>
-              <div class="invalid-feedback">Please enter your country.</div>
-
-              <datalist id="country-options">
-                <option value="Greece"></option>
-                <option value="Cyprus"></option>
-                <option value="United States"></option>
-                <option value="United Kingdom"></option>
-                <option value="Germany"></option>
-                <option value="France"></option>
-                <option value="Italy"></option>
-                <option value="Spain"></option>
-                <option value="Canada"></option>
-                <option value="Australia"></option>
-                <option value="Brazil"></option>
-                <option value="Turkey"></option>
-                <option value="Serbia"></option>
-                <option value="Bulgaria"></option>
-                <option value="Romania"></option>
-                <option value="Albania"></option>
-                <option value="North Macedonia"></option>
-                <option value="Ukraine"></option>
-                <option value="Israel"></option>
-              </datalist>
+              <select class="form-select" id="country-input" name="country" required>
+                <option value="">Select a country</option>
+                <option value="Greece">Greece</option>
+                <option value="Cyprus">Cyprus</option>
+                <option value="United States">United States</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="Germany">Germany</option>
+                <option value="France">France</option>
+                <option value="Italy">Italy</option>
+                <option value="Spain">Spain</option>
+                <option value="Canada">Canada</option>
+                <option value="Australia">Australia</option>
+                <option value="Brazil">Brazil</option>
+                <option value="Turkey">Turkey</option>
+                <option value="Serbia">Serbia</option>
+                <option value="Bulgaria">Bulgaria</option>
+                <option value="Romania">Romania</option>
+                <option value="Albania">Albania</option>
+                <option value="North Macedonia">North Macedonia</option>
+                <option value="Ukraine">Ukraine</option>
+                <option value="Israel">Israel</option>
+              </select>
+              <div class="invalid-feedback">Please select your country.</div>
             </div>
 
             <div class="col-md-6">
@@ -370,7 +368,7 @@
       }
     });
 
-    // 4. Auto-fill Phone Prefix based on Country
+   // 4. Auto-fill Phone Prefix based on Country
     const countryPrefixes = {
       "Greece": "+30",
       "Cyprus": "+357",
@@ -398,17 +396,36 @@
 
     countryInput.addEventListener("change", function () {
       const selectedCountry = this.value;
-      const prefix = countryPrefixes[selectedCountry];
+      const newPrefix = countryPrefixes[selectedCountry];
 
-      if (prefix) {
-        const currentPhone = phoneInput.value.trim();
-        // Αν το πεδίο είναι άδειο, βάζουμε το πρόθεμα
+      if (newPrefix) {
+        let currentPhone = phoneInput.value.trim();
+
+        // Check if the current phone number starts with ANY of our known prefixes
+        let hasExistingPrefix = false;
+        let oldPrefix = "";
+        
+        for (const key in countryPrefixes) {
+          const prefixToCheck = countryPrefixes[key];
+          if (currentPhone.startsWith(prefixToCheck)) {
+            hasExistingPrefix = true;
+            oldPrefix = prefixToCheck;
+            break; 
+          }
+        }
+
         if (currentPhone === "") {
-          phoneInput.value = prefix + " ";
+           // Case 1: Empty box
+           phoneInput.value = newPrefix + " ";
         } 
-        // Αν ο χρήστης έχει γράψει κάτι αλλά ξέχασε το +, το προσθέτουμε μπροστά
+        else if (hasExistingPrefix) {
+           // Case 2: Replace old prefix with new prefix
+           const remainingNumber = currentPhone.substring(oldPrefix.length).trim();
+           phoneInput.value = newPrefix + " " + remainingNumber;
+        } 
         else if (!currentPhone.startsWith("+")) {
-          phoneInput.value = prefix + " " + currentPhone;
+           // Case 3: Typed number without a +
+           phoneInput.value = newPrefix + " " + currentPhone;
         }
       }
     });
@@ -422,28 +439,32 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
 
-      // Check if the form is fully valid
       if (!form.checkValidity()) {
         e.stopPropagation();
         form.classList.add('was-validated');
         
-        // Find the first empty field and scroll smoothly to it
         const firstInvalid = form.querySelector(':invalid');
         if (firstInvalid) {
           firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        return; // Stop the code here so it doesn't submit
+        return; 
       }
 
-      // If validation passes, proceed with submission
       form.classList.add('was-validated');
       submitBtn.disabled = true;
       spinner.style.display = 'inline-block';
 
+      // Secretly add the single quote to the phone number for Google Sheets
+      const formData = new FormData(form);
+      const currentPhoneVal = formData.get('phone');
+      if (currentPhoneVal && currentPhoneVal.startsWith('+')) {
+        formData.set('phone', "'" + currentPhoneVal);
+      }
+
       fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(new FormData(form)).toString(),
+        body: new URLSearchParams(formData).toString(),
       })
         .then((response) => {
           if (response.ok) {
@@ -451,11 +472,9 @@
             successMessage.classList.remove('d-none');
             successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
             
-            // Reset the form and remove the validation red highlights
             form.reset();
             form.classList.remove('was-validated');
 
-            // Hide the message after 5 seconds
             setTimeout(function() {
               successMessage.classList.add('d-none');
             }, 5000);
