@@ -107,18 +107,22 @@
 
         <div class="form-note">📅 20–25 August 2026 · Karpenisi, Greece — spots are limited, so register early!</div>
 
-        <form id="registrationForm" name="registration" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+        <!-- Added 'needs-validation' class and 'novalidate' to stop default browser tooltips -->
+        <form id="registrationForm" class="needs-validation" name="registration" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
           <input type="hidden" name="form-name" value="registration" />
           <input type="hidden" name="subject" value="New registration " />
           <p style="display:none"><label>Don't fill this out: <input name="bot-field" /></label></p>
+          
           <div class="row g-3">
             <div class="col-md-6">
               <label for="firstName" class="form-label">First Name</label>
               <input type="text" class="form-control" id="firstName" name="firstName" required>
+              <div class="invalid-feedback">Please enter your first name.</div>
             </div>
             <div class="col-md-6">
               <label for="lastName" class="form-label">Last Name</label>
               <input type="text" class="form-control" id="lastName" name="lastName" required>
+              <div class="invalid-feedback">Please enter your last name.</div>
             </div>
 
             <div class="col-md-6">
@@ -128,20 +132,24 @@
                 <option value="Male">Male</option>
                 <option value="Female">Female</option>
               </select>
+              <div class="invalid-feedback">Please select a gender.</div>
             </div>
 
             <div class="col-md-6">
               <label for="email" class="form-label">Email</label>
               <input type="email" class="form-control" id="email" name="email" required>
+              <div class="invalid-feedback">Please enter a valid email address.</div>
             </div>
             <div class="col-md-6">
               <label for="phone" class="form-label">Phone</label>
               <input type="tel" class="form-control" id="phone" name="phone" required>
+              <div class="invalid-feedback">Please enter a phone number.</div>
             </div>
 
             <div class="col-md-6">
               <label for="age" class="form-label">Age</label>
               <input type="number" min="3" max="99" class="form-control" id="age" name="age" required>
+              <div class="invalid-feedback">Please enter a valid age.</div>
             </div>
 
 
@@ -153,6 +161,7 @@
                 <option value="Coach">Coach</option>
                 <option value="Assistant">Assistant</option>
               </select>
+              <div class="invalid-feedback">Please select your status.</div>
             </div>
 
             <div id="athlete-options-container" class="col-12" style="display: none;">
@@ -168,6 +177,7 @@
                     <option value="Juniors">Juniors</option>
                     <option value="Seniors">Seniors</option>
                   </select>
+                  <div class="invalid-feedback">Please select a category.</div>
                 </div>
 
                 <div class="col-md-4 d-none" id="weight-wrapper">
@@ -175,6 +185,7 @@
                   <select class="form-select" id="weight" name="weight">
                     <option value="">Select Weight</option>
                   </select>
+                  <div class="invalid-feedback">Please select a weight class.</div>
                 </div>
 
                 <div class="col-md-4">
@@ -209,19 +220,20 @@
                 <option value="XL">XL</option>
                 <option value="XXL">XXL</option>
               </select>
+              <div class="invalid-feedback">Please select a T-shirt size.</div>
             </div>
 
             <div class="col-md-6">
               <label for="club" class="form-label">Athletic Club</label>
               <input type="text" class="form-control" id="club" name="club" maxlength="100" required>
+              <div class="invalid-feedback">Please enter your club name.</div>
             </div>
 
-            <!-- Χώρα: Select Dropdown για μεγαλύτερη ασφάλεια -->
             <div class="col-md-6">
               <label for="country-input" class="form-label">Country</label>
-              <!-- Το list="country-options" συνδέει το input με το datalist από κάτω -->
               <input type="text" class="form-control" id="country-input" name="country" list="country-options"
                 placeholder="Type to search..." required>
+              <div class="invalid-feedback">Please enter your country.</div>
 
               <datalist id="country-options">
                 <option value="Greece"></option>
@@ -241,6 +253,8 @@
                 <option value="Romania"></option>
                 <option value="Albania"></option>
                 <option value="North Macedonia"></option>
+                <option value="Ukraine"></option>
+                <option value="Israel"></option>
               </datalist>
             </div>
 
@@ -253,6 +267,7 @@
                 <option value="KarpenisiToAthens">Karpenisi to Athens</option>
                 <option value="None">None</option>
               </select>
+              <div class="invalid-feedback">Please select a transportation option.</div>
             </div>
 
             <div class="col-12">
@@ -262,6 +277,7 @@
                   I consent to the collection and processing of my personal data for the purpose of registering for the
                   Summer Mountain Taekwondo Training Camp 2026, in accordance with GDPR regulations.
                 </label>
+                <div class="invalid-feedback">You must agree before submitting.</div>
               </div>
             </div>
 
@@ -275,7 +291,7 @@
             </div>
 
             <div id="successMessage" class="alert alert-success mt-3 d-none text-center">
-              ✅ Your registration was successful! You will be notified shortly with a confirmation email.
+              <!-- Success text is injected via JavaScript now -->
             </div>
           </div>
         </form>
@@ -289,9 +305,9 @@
     // 1. Define the weight options for each category
     const weightOptions = {
       Kids: ["-27kg", "-30kg", "-33kg", "+33kg"],
-      Cadets: ["-37kg", "-41kg", "-45kg", "-49kg", "+49kg"],
-      Juniors: ["-48kg", "-55kg", "-63kg", "-73kg", "+73kg"],
-      Seniors: ["-58kg", "-68kg", "-80kg", "+80kg"]
+      Cadets: ["W-29kg","W-33kg","W-37kg", "W-41kg", "W-44kg", "W-47kg", "W-51kg","W-55kg","W-59kg","W+59kg", "M-33kg", "M-37kg", "M-41kg", "M-45kg", "M-49kg", "M-53kg", "M-57kg", "M-61kg", "M-65kg", "M+65kg"],
+      Juniors: ["W-44kg", "W-49kg", "W-55kg", "W-63kg", "W+63kg","M-48kg", "M-48kg", "M-55kg", "M-63kg", "M-73kg", "M+73kg"],
+      Seniors: ["W-46kg", "W-49kg", "W-53kg", "W-57KG","W-62kg","W-67kg", "W-73kg", "W+73kg", "M-54kg","M-58kg", "M-63kg", "M-68kg", "M-74kg", "M-80kg", "M-87kg", "M+80kg"]
     };
 
     const statusSelect = document.getElementById("status");
@@ -343,15 +359,50 @@
       }
     });
 
-    //   // 1. Εμφάνιση distinction , category μόνο για Athletes
-    //   document.getElementById("status").addEventListener("change", function () {
-    //   const athleteOptionsContainer = document.getElementById("athlete-options-container");
+    // 4. Auto-fill Phone Prefix based on Country
+    const countryPrefixes = {
+      "Greece": "+30",
+      "Cyprus": "+357",
+      "United States": "+1",
+      "United Kingdom": "+44",
+      "Germany": "+49",
+      "France": "+33",
+      "Italy": "+39",
+      "Spain": "+34",
+      "Canada": "+1",
+      "Australia": "+61",
+      "Brazil": "+55",
+      "Turkey": "+90",
+      "Serbia": "+381",
+      "Bulgaria": "+359",
+      "Romania": "+40",
+      "Albania": "+355",
+      "North Macedonia": "+389",
+      "Ukraine": "+380",
+      "Israel": "+972"
+    };
 
-    //   // Shows or hides the entire wrapper container
-    //   athleteOptionsContainer.style.display = this.value === "Athlete" ? "block" : "none";
-    // });
+    const countryInput = document.getElementById("country-input");
+    const phoneInput = document.getElementById("phone");
 
-    // 2. Υποβολή στο Google Apps Script
+    countryInput.addEventListener("change", function () {
+      const selectedCountry = this.value;
+      const prefix = countryPrefixes[selectedCountry];
+
+      if (prefix) {
+        const currentPhone = phoneInput.value.trim();
+        // Αν το πεδίο είναι άδειο, βάζουμε το πρόθεμα
+        if (currentPhone === "") {
+          phoneInput.value = prefix + " ";
+        } 
+        // Αν ο χρήστης έχει γράψει κάτι αλλά ξέχασε το +, το προσθέτουμε μπροστά
+        else if (!currentPhone.startsWith("+")) {
+          phoneInput.value = prefix + " " + currentPhone;
+        }
+      }
+    });
+
+    // 5. Form Submission Handling & Validation (Netlify AJAX)
     const form = document.getElementById('registrationForm');
     const successMessage = document.getElementById('successMessage');
     const submitBtn = document.getElementById('submitBtn');
@@ -359,6 +410,22 @@
 
     form.addEventListener('submit', function (e) {
       e.preventDefault();
+
+      // Check if the form is fully valid
+      if (!form.checkValidity()) {
+        e.stopPropagation();
+        form.classList.add('was-validated');
+        
+        // Find the first empty field and scroll smoothly to it
+        const firstInvalid = form.querySelector(':invalid');
+        if (firstInvalid) {
+          firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        return; // Stop the code here so it doesn't submit
+      }
+
+      // If validation passes, proceed with submission
+      form.classList.add('was-validated');
       submitBtn.disabled = true;
       spinner.style.display = 'inline-block';
 
@@ -372,7 +439,16 @@
             successMessage.innerText = "✅ Your registration was successful! You will be notified shortly with a confirmation email.";
             successMessage.classList.remove('d-none');
             successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Reset the form and remove the validation red highlights
             form.reset();
+            form.classList.remove('was-validated');
+
+            // Hide the message after 5 seconds
+            setTimeout(function() {
+              successMessage.classList.add('d-none');
+            }, 5000);
+
           } else {
             alert('⚠ Submission failed. Please try again or contact us directly.');
           }
