@@ -335,16 +335,14 @@
 /* Feature / info cards */
 .info-card {
   background: #fff;
-  border: 1px solid #eee;
-  border-radius: 1rem;
-  padding: 1.75rem;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease;
 }
 
 .info-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
 }
 
 .info-icon {
