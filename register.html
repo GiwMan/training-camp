@@ -477,22 +477,27 @@
             form.reset();
             form.classList.remove('was-validated');
 
+            
+            submitBtn.style.display = 'none'; 
+
             setTimeout(function() {
               successMessage.classList.add('d-none');
+              submitBtn.style.display = 'block'; 
+              submitBtn.disabled = false;
             }, 5000);
 
           } else {
             alert('⚠ Submission failed. Please try again or contact us directly.');
+            submitBtn.disabled = false; 
           }
         })
         .catch(err => {
           alert('⚠ Submission error: ' + err.message);
+          submitBtn.disabled = false; 
         })
         .finally(() => {
-          submitBtn.disabled = false;
-          spinner.style.display = 'none';
+          spinner.style.display = 'none'; // Ο spinner σβήνει πάντα
         });
-    });
 
   </script>
 
