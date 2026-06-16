@@ -181,8 +181,11 @@
 
             <div class="col-md-6">
               <label for="phone" class="form-label">Phone</label>
-              <input type="tel" class="form-control" id="phone" name="phone" required>
-              <div class="invalid-feedback">Please enter a phone number.</div>
+              <div class="input-group">
+                <span class="input-group-text" id="phonePrefix">+</span>
+                <input type="tel" class="form-control" id="phone" name="phone_local" placeholder="e.g. 6900000000" required>
+              </div>
+              <div class="invalid-feedback">Please enter your phone number.</div>
             </div>
 
             <div class="col-md-6">
@@ -394,41 +397,17 @@
     };
 
     const countryInput = document.getElementById("country-input");
-    const phoneInput = document.getElementById("phone");
+    const phonePrefixSpan = document.getElementById("phonePrefix");
 
     countryInput.addEventListener("change", function () {
       const selectedCountry = this.value;
       const newPrefix = countryPrefixes[selectedCountry];
 
+      // Update the uneditable span text instead of the input value
       if (newPrefix) {
-        let currentPhone = phoneInput.value.trim();
-
-        // Check if the current phone number starts with ANY of our known prefixes
-        let hasExistingPrefix = false;
-        let oldPrefix = "";
-        
-        for (const key in countryPrefixes) {
-          const prefixToCheck = countryPrefixes[key];
-          if (currentPhone.startsWith(prefixToCheck)) {
-            hasExistingPrefix = true;
-            oldPrefix = prefixToCheck;
-            break; 
-          }
-        }
-
-        if (currentPhone === "") {
-           // Case 1: Empty box
-           phoneInput.value = newPrefix + " ";
-        } 
-        else if (hasExistingPrefix) {
-           // Case 2: Replace old prefix with new prefix
-           const remainingNumber = currentPhone.substring(oldPrefix.length).trim();
-           phoneInput.value = newPrefix + " " + remainingNumber;
-        } 
-        else if (!currentPhone.startsWith("+")) {
-           // Case 3: Typed number without a +
-           phoneInput.value = newPrefix + " " + currentPhone;
-        }
+        phonePrefixSpan.textContent = newPrefix;
+      } else {
+        phonePrefixSpan.textContent = "+"; // Reset if no country selected
       }
     });
 
@@ -459,12 +438,19 @@
       submitBtn.disabled = true;
       spinner.style.display = 'inline-block';
 
-      // Secretly add the single quote to the phone number for Google Sheets
+      // Secretly combine the prefix and the local phone number for Google Sheets
       const formData = new FormData(form);
-      const currentPhoneVal = formData.get('phone');
-      if (currentPhoneVal && currentPhoneVal.startsWith('+')) {
-        formData.set('phone', "'" + currentPhoneVal);
-      }
+      const prefix = document.getElementById('phonePrefix').textContent;
+      const localPhone = formData.get('phone_local');
+      
+      // Combine them and add the single quote to force Google Sheets to read it as text
+      const fullPhone = "'" + prefix + " " + localPhone;
+      
+      // Set the final 'phone' variable that Google Sheets is expecting
+      formData.set('phone', fullPhone);
+      
+      // Delete the temporary local one so we don't send garbage data to Netlify
+      formData.delete('phone_local');
 
       fetch('/', {
         method: 'POST',
