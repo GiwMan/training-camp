@@ -439,8 +439,10 @@
     const spinner = document.getElementById('spinner');
 
     form.addEventListener('submit', function (e) {
+      // Σταματάει την προεπιλεγμένη (και άδεια) αποστολή
       e.preventDefault();
 
+      // Έλεγχος: Αν η φόρμα είναι άδεια ή έχει λάθη, ΣΤΑΜΑΤΑΕΙ εδώ!
       if (!form.checkValidity()) {
         e.stopPropagation();
         form.classList.add('was-validated');
@@ -449,9 +451,10 @@
         if (firstInvalid) {
           firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        return; 
+        return; // Δεν προχωράει στο fetch
       }
 
+      // Αν όλα είναι γεμάτα και σωστά, προχωράμε
       form.classList.add('was-validated');
       submitBtn.disabled = true;
       spinner.style.display = 'inline-block';
@@ -476,7 +479,6 @@
             
             form.reset();
             form.classList.remove('was-validated');
-
             
             submitBtn.style.display = 'none'; 
 
@@ -496,8 +498,9 @@
           submitBtn.disabled = false; 
         })
         .finally(() => {
-          spinner.style.display = 'none'; // Ο spinner σβήνει πάντα
+          spinner.style.display = 'none';
         });
+    }); 
 
   </script>
 
