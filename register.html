@@ -183,7 +183,7 @@
               <label for="phone" class="form-label">Phone</label>
               <div class="input-group">
                 <span class="input-group-text" id="phonePrefix">+</span>
-                <input type="tel" class="form-control" id="phone" name="phone_local" placeholder="e.g. 6900000000" required>
+                <input type="tel" class="form-control" id="phone" name="phone" placeholder="e.g. 6900000000" required>
               </div>
               <div class="invalid-feedback">Please enter your phone number.</div>
             </div>
@@ -438,19 +438,16 @@
       submitBtn.disabled = true;
       spinner.style.display = 'inline-block';
 
-      // Secretly combine the prefix and the local phone number for Google Sheets
+      // Combine the prefix and the local phone number
       const formData = new FormData(form);
       const prefix = document.getElementById('phonePrefix').textContent;
-      const localPhone = formData.get('phone_local');
+      const localPhone = formData.get('phone');
       
-      // Combine them and add the single quote to force Google Sheets to read it as text
-      const fullPhone = "'" + prefix + " " + localPhone;
+      // Combine them cleanly (Netlify will store this nicely)
+      const fullPhone = prefix + " " + localPhone;
       
-      // Set the final 'phone' variable that Google Sheets is expecting
+      // Overwrite the 'phone' variable with the full international number
       formData.set('phone', fullPhone);
-      
-      // Delete the temporary local one so we don't send garbage data to Netlify
-      formData.delete('phone_local');
 
       fetch('/', {
         method: 'POST',
