@@ -9,15 +9,15 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <!-- Google tag (gtag.js) -->
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDMQY4K6RY"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YDMQY4K6RY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-  gtag('config', 'G-YDMQY4K6RY');
-</script>
+    gtag('config', 'G-YDMQY4K6RY');
+  </script>
   <style>
     body {
       background: linear-gradient(180deg, #f5f7fa 0%, #e9eef5 100%);
@@ -117,18 +117,17 @@
 
         <div class="form-note">📅 20–25 August 2026 · Karpenisi, Greece — spots are limited, so register early!</div>
 
-        <!-- Added 'needs-validation' class and 'novalidate' to stop default browser tooltips -->
-        <form id="registrationForm" class="needs-validation" name="registration" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <form id="registrationForm" class="needs-validation" novalidate>
+          <!-- Remove all Netlify attributes -->
           <input type="hidden" name="form-name" value="registration" />
-          <input type="hidden" name="subject" value="New registration " />
-          <p style="display:none"><label>Don't fill this out: <input name="bot-field" /></label></p>
-          
+
           <div class="row g-3">
             <div class="col-md-6">
               <label for="firstName" class="form-label">First Name</label>
               <input type="text" class="form-control" id="firstName" name="firstName" required>
               <div class="invalid-feedback">Please enter your first name.</div>
             </div>
+
             <div class="col-md-6">
               <label for="lastName" class="form-label">Last Name</label>
               <input type="text" class="form-control" id="lastName" name="lastName" required>
@@ -194,7 +193,6 @@
               <div class="invalid-feedback">Please enter a valid age.</div>
             </div>
 
-
             <div class="col-md-6">
               <label for="status" class="form-label">Status</label>
               <select class="form-select" id="status" name="status" required>
@@ -209,7 +207,6 @@
             <div id="athlete-options-container" class="col-12" style="display: none;">
               <p class="form-label mb-2">Athlete details</p>
               <div class="row g-3">
-
                 <div class="col-md-4">
                   <label for="category" class="form-label">Category</label>
                   <select class="form-select" id="category" name="category">
@@ -243,7 +240,6 @@
                     <option value="Other">Other</option>
                   </select>
                 </div>
-
               </div>
             </div>
 
@@ -303,76 +299,26 @@
               </div>
             </div>
 
-            <div id="successMessage" class="alert alert-success mt-3 d-none text-center">
-              <!-- Success text is injected via JavaScript now -->
-            </div>
+            <div id="successMessage" class="alert alert-success mt-3 d-none text-center"></div>
+            <div id="errorMessage" class="alert alert-danger mt-3 d-none text-center"></div>
           </div>
         </form>
-
       </div>
     </div>
   </div>
 
   <script>
 
-    // 1. Define the weight options for each category
+    // ============================================
+    // 1. WEIGHT OPTIONS FOR ATHLETES
+    // ============================================
     const weightOptions = {
       Kids: ["-27kg", "-30kg", "-33kg", "+33kg"],
-      Cadets: ["W-29kg","W-33kg","W-37kg", "W-41kg", "W-44kg", "W-47kg", "W-51kg","W-55kg","W-59kg","W+59kg", "M-33kg", "M-37kg", "M-41kg", "M-45kg", "M-49kg", "M-53kg", "M-57kg", "M-61kg", "M-65kg", "M+65kg"],
-      Juniors: ["W-42kg", "W-44kg", "W-46kg", "W-49kg", "W-52kg", "W-55kg", "W-59kg", "W-63kg", "W-68kg", "W+68kg","M-45kg", "M-48kg", "M-51kg", "M-55kg", "M-63kg", "M-73kg", "M+73kg"],
-      Seniors: ["W-46kg", "W-49kg", "W-53kg", "W-57KG","W-62kg","W-67kg", "W-73kg", "W+73kg", "M-54kg","M-58kg", "M-63kg", "M-68kg", "M-74kg", "M-80kg", "M-87kg", "M+80kg"]
+      Cadets: ["W-29kg", "W-33kg", "W-37kg", "W-41kg", "W-44kg", "W-47kg", "W-51kg", "W-55kg", "W-59kg", "W+59kg", "M-33kg", "M-37kg", "M-41kg", "M-45kg", "M-49kg", "M-53kg", "M-57kg", "M-61kg", "M-65kg", "M+65kg"],
+      Juniors: ["W-42kg", "W-44kg", "W-46kg", "W-49kg", "W-52kg", "W-55kg", "W-59kg", "W-63kg", "W-68kg", "W+68kg", "M-45kg", "M-48kg", "M-51kg", "M-55kg", "M-63kg", "M-73kg", "M+73kg"],
+      Seniors: ["W-46kg", "W-49kg", "W-53kg", "W-57KG", "W-62kg", "W-67kg", "W-73kg", "W+73kg", "M-54kg", "M-58kg", "M-63kg", "M-68kg", "M-74kg", "M-80kg", "M-87kg", "M+80kg"]
     };
 
-    const statusSelect = document.getElementById("status");
-    const categorySelect = document.getElementById("category");
-    const weightSelect = document.getElementById("weight");
-    const athleteContainer = document.getElementById("athlete-options-container");
-    const weightWrapper = document.getElementById("weight-wrapper");
-
-    // 2. Handle Status Change
-    statusSelect.addEventListener("change", function () {
-      if (this.value === "Athlete") {
-        athleteContainer.style.display = "block";
-        categorySelect.setAttribute("required", "required");
-      } else {
-        athleteContainer.style.display = "none";
-        weightWrapper.classList.add("d-none"); // Hide weight if not athlete
-        categorySelect.removeAttribute("required");
-        weightSelect.removeAttribute("required");
-
-        // Reset selections
-        categorySelect.value = "";
-        weightSelect.value = "";
-      }
-    });
-
-    // 3. Handle Category Change (Only triggers if Athlete container is visible)
-    categorySelect.addEventListener("change", function () {
-      const selectedCategory = this.value;
-
-      // Clear out any previous weight options
-      weightSelect.innerHTML = '<option value="">Select Weight</option>';
-
-      if (selectedCategory && weightOptions[selectedCategory]) {
-        // Reveal the weight dropdown wrapper
-        weightWrapper.classList.remove("d-none");
-        weightSelect.setAttribute("required", "required");
-
-        // Loop through the array for the chosen category and inject options
-        weightOptions[selectedCategory].forEach(function (kg) {
-          const option = document.createElement("option");
-          option.value = kg;
-          option.textContent = kg;
-          weightSelect.appendChild(option);
-        });
-      } else {
-        // Hide weight wrapper if "Select Category" (blank) is clicked
-        weightWrapper.classList.add("d-none");
-        weightSelect.removeAttribute("required");
-      }
-    });
-
-   // 4. Auto-fill Phone Prefix based on Country
     const countryPrefixes = {
       "Greece": "+30",
       "Cyprus": "+357",
@@ -396,98 +342,154 @@
       "Israel": "+972"
     };
 
+    // ============================================
+    // 2. DOM ELEMENTS
+    // ============================================
+    const form = document.getElementById('registrationForm');
+    const statusSelect = document.getElementById("status");
+    const categorySelect = document.getElementById("category");
+    const weightSelect = document.getElementById("weight");
+    const athleteContainer = document.getElementById("athlete-options-container");
+    const weightWrapper = document.getElementById("weight-wrapper");
     const countryInput = document.getElementById("country-input");
     const phonePrefixSpan = document.getElementById("phonePrefix");
-
-    countryInput.addEventListener("change", function () {
-      const selectedCountry = this.value;
-      const newPrefix = countryPrefixes[selectedCountry];
-
-      // Update the uneditable span text instead of the input value
-      if (newPrefix) {
-        phonePrefixSpan.textContent = newPrefix;
-      } else {
-        phonePrefixSpan.textContent = "+"; // Reset if no country selected
-      }
-    });
-
-    // 5. Form Submission Handling & Validation (Netlify AJAX)
-    const form = document.getElementById('registrationForm');
     const successMessage = document.getElementById('successMessage');
+    const errorMessage = document.getElementById('errorMessage');
     const submitBtn = document.getElementById('submitBtn');
     const spinner = document.getElementById('spinner');
 
+    // ============================================
+    // 3. STATUS CHANGE HANDLER
+    // ============================================
+    statusSelect.addEventListener("change", function () {
+      if (this.value === "Athlete") {
+        athleteContainer.style.display = "block";
+        categorySelect.setAttribute("required", "required");
+      } else {
+        athleteContainer.style.display = "none";
+        weightWrapper.classList.add("d-none");
+        categorySelect.removeAttribute("required");
+        weightSelect.removeAttribute("required");
+        categorySelect.value = "";
+        weightSelect.value = "";
+      }
+    });
+
+    // ============================================
+    // 4. CATEGORY CHANGE HANDLER
+    // ============================================
+    categorySelect.addEventListener("change", function () {
+      const selectedCategory = this.value;
+      weightSelect.innerHTML = '<option value="">Select Weight</option>';
+
+      if (selectedCategory && weightOptions[selectedCategory]) {
+        weightWrapper.classList.remove("d-none");
+        weightSelect.setAttribute("required", "required");
+
+        weightOptions[selectedCategory].forEach(function (kg) {
+          const option = document.createElement("option");
+          option.value = kg;
+          option.textContent = kg;
+          weightSelect.appendChild(option);
+        });
+      } else {
+        weightWrapper.classList.add("d-none");
+        weightSelect.removeAttribute("required");
+      }
+    });
+
+    // ============================================
+    // 5. COUNTRY CHANGE HANDLER (Auto Phone Prefix)
+    // ============================================
+    countryInput.addEventListener("change", function () {
+      const selectedCountry = this.value;
+      const newPrefix = countryPrefixes[selectedCountry];
+      phonePrefixSpan.textContent = newPrefix || "+";
+    });
+
+    // ============================================
+    // 6. FORM SUBMISSION HANDLER
+    // ============================================
     form.addEventListener('submit', function (e) {
-      // Σταματάει την προεπιλεγμένη (και άδεια) αποστολή
       e.preventDefault();
 
-      // Έλεγχος: Αν η φόρμα είναι άδεια ή έχει λάθη, ΣΤΑΜΑΤΑΕΙ εδώ!
+      // Validate form
       if (!form.checkValidity()) {
-        e.stopPropagation();
         form.classList.add('was-validated');
-        
         const firstInvalid = form.querySelector(':invalid');
         if (firstInvalid) {
           firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        return; // Δεν προχωράει στο fetch
+        return;
       }
 
-      // Αν όλα είναι γεμάτα και σωστά, προχωράμε
+      // Show loading state
       form.classList.add('was-validated');
       submitBtn.disabled = true;
       spinner.style.display = 'inline-block';
+      errorMessage.classList.add('d-none');
+      successMessage.classList.add('d-none');
 
-      // Combine the prefix and the local phone number
+      // Prepare form data
       const formData = new FormData(form);
-      const prefix = document.getElementById('phonePrefix').textContent;
+
+      // Combine phone prefix with phone number
+      const prefix = phonePrefixSpan.textContent;
       const localPhone = formData.get('phone');
-      
-      // Combine them cleanly (Netlify will store this nicely)
       const fullPhone = prefix + " " + localPhone;
-      
-      // Overwrite the 'phone' variable with the full international number
       formData.set('phone', fullPhone);
 
+      // ✅ LOG DATA BEING SENT
+      console.log('=== FORM DATA BEING SENT ===');
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+      console.log('============================');
 
-      const googleScriptURL = 'https://script.google.com/macros/s/AKfycbznTXOsk2P_M-2vHJhRVuKIOh-030FKC-_K3SYwlDxFhSk6Mh3FaANX9MH_NqmI1TC7/exec';
+      // Create a temporary form for submission via iframe
+      const tempForm = document.createElement('form');
+      tempForm.method = 'POST';
+      tempForm.action = 'https://script.google.com/macros/s/AKfycbw81HLx5wSgoVveuRyJidt7CL2VgzhJgDGz0q23oUBsOcAEk7nOAAwIA3HKP7kxT5E/exec';
+      tempForm.target = 'hidden_iframe';
 
+      // Convert FormData to form fields
+      for (let [key, value] of formData.entries()) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = value;
+        tempForm.appendChild(input);
+      }
 
-      fetch(googleScriptURL, {
-        method: 'POST',
-        headers: {
-        'Content-Type': 'application/json'
-      },
-       body: JSON.stringify(formData),
-        mode: 'no-cors' // <-- This tells the browser to bypass the strict CORS block
-      })
-        .then(() => {
-          // Because of 'no-cors', the browser is blindfolded and can't read Google's response.
-          // But if we get here without a network crash, the data was sent successfully!
-          
-          successMessage.innerText = "✅ Your registration was successful! You will be notified shortly with a confirmation email.";
-          successMessage.classList.remove('d-none');
-          successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          
-          form.reset();
-          form.classList.remove('was-validated');
-          submitBtn.style.display = 'none'; 
+      document.body.appendChild(tempForm);
+      tempForm.submit();
 
-          setTimeout(function() {
-            successMessage.classList.add('d-none');
-            submitBtn.style.display = 'block'; 
-            submitBtn.disabled = false;
-          }, 5000);
-        })
-        .catch(err => {
-          // This only triggers if the internet goes down
-          alert('⚠ Network error: Could not reach the server. ' + err.message);
+      console.log('✅ Form submitted to Google Apps Script');
+
+      // Show success message after a short delay
+      setTimeout(() => {
+        successMessage.innerText = "✅ Your registration was successful! You will receive a confirmation email shortly.";
+        successMessage.classList.remove('d-none');
+        successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        form.reset();
+        form.classList.remove('was-validated');
+        submitBtn.style.display = 'none';
+        spinner.style.display = 'none';
+
+        setTimeout(function () {
+          successMessage.classList.add('d-none');
+          submitBtn.style.display = 'block';
           submitBtn.disabled = false;
-        })
-        .finally(() => {
-          spinner.style.display = 'none';
-        });
+        }, 5000);
+      }, 500);
+
+      // Clean up temporary form
+      document.body.removeChild(tempForm);
     });
+
+
+
 
   </script>
 
@@ -543,6 +545,8 @@
       }
     });
   </script>
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
 </body>
 
 </html>
