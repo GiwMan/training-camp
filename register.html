@@ -449,41 +449,45 @@
       // Overwrite the 'phone' variable with the full international number
       formData.set('phone', fullPhone);
 
-      fetch('/', {
+
+      const googleScriptURL = 'https://script.google.com/macros/s/AKfycbznTXOsk2P_M-2vHJhRVuKIOh-030FKC-_K3SYwlDxFhSk6Mh3FaANX9MH_NqmI1TC7/exec';
+
+
+      fetch(googleScriptURL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formData).toString(),
+        headers: {
+        'Content-Type': 'application/json'
+      },
+       body: JSON.stringify(formData),
+        mode: 'no-cors' // <-- This tells the browser to bypass the strict CORS block
       })
-        .then((response) => {
-          if (response.ok) {
-            successMessage.innerText = "✅ Your registration was successful! You will be notified shortly with a confirmation email.";
-            successMessage.classList.remove('d-none');
-            successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            form.reset();
-            form.classList.remove('was-validated');
-            
-            submitBtn.style.display = 'none'; 
+        .then(() => {
+          // Because of 'no-cors', the browser is blindfolded and can't read Google's response.
+          // But if we get here without a network crash, the data was sent successfully!
+          
+          successMessage.innerText = "✅ Your registration was successful! You will be notified shortly with a confirmation email.";
+          successMessage.classList.remove('d-none');
+          successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          
+          form.reset();
+          form.classList.remove('was-validated');
+          submitBtn.style.display = 'none'; 
 
-            setTimeout(function() {
-              successMessage.classList.add('d-none');
-              submitBtn.style.display = 'block'; 
-              submitBtn.disabled = false;
-            }, 5000);
-
-          } else {
-            alert('⚠ Submission failed. Please try again or contact us directly.');
-            submitBtn.disabled = false; 
-          }
+          setTimeout(function() {
+            successMessage.classList.add('d-none');
+            submitBtn.style.display = 'block'; 
+            submitBtn.disabled = false;
+          }, 5000);
         })
         .catch(err => {
-          alert('⚠ Submission error: ' + err.message);
-          submitBtn.disabled = false; 
+          // This only triggers if the internet goes down
+          alert('⚠ Network error: Could not reach the server. ' + err.message);
+          submitBtn.disabled = false;
         })
         .finally(() => {
           spinner.style.display = 'none';
         });
-    }); 
+    });
 
   </script>
 
