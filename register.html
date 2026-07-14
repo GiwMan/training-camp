@@ -7,17 +7,18 @@
   <title>Registration - Summer Mountain Taekwondo Training Camp 2026 Karpenisi</title>
   <link rel="icon" type="image/png" href="img/smtt-logo-Apr25white.png" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.bootstrap5.min.css" rel="stylesheet">
+  
   <link rel="stylesheet" href="style.css">
-  <!-- Google tag (gtag.js) -->
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YDMQY4K6RY"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-YDMQY4K6RY"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-  gtag('config', 'G-YDMQY4K6RY');
-</script>
+    gtag('config', 'G-YDMQY4K6RY');
+  </script>
   <style>
     body {
       background: linear-gradient(180deg, #f5f7fa 0%, #e9eef5 100%);
@@ -84,6 +85,19 @@
       border-radius: 10px;
     }
 
+    /* Style tweak to make Tom Select look identical to Bootstrap form-control inputs */
+    .ts-wrapper.form-select {
+      padding: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+    .ts-wrapper.form-select .ts-control {
+      border: 1px solid #dee2e6 !important;
+      border-radius: 0.375rem !important;
+      padding: 0.6rem 0.85rem !important;
+      font-size: 1rem !important;
+    }
+
     @media (max-width: 768px) {
       .form-section {
         padding: 6rem 0.5rem 2.5rem;
@@ -96,6 +110,21 @@
       .form-card .form-header h1 {
         font-size: 1.6rem;
       }
+    }
+
+    /* 1. When the form is validated, if the country select is invalid, make the Tom Select wrapper red */
+    .was-validated #country-input:invalid + .ts-wrapper .ts-control {
+      border-color: #dc3545 !important;
+      padding-right: calc(1.5em + 0.75rem) !important;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5' stroke-width='1'/%3e%3cpath stroke-width='1.2' d='M6 3v4M6 9h.01'/%3e%3c/svg%3e") !important;
+      background-repeat: no-repeat !important;
+      background-position: right calc(0.375em + 0.1875rem) center !important;
+      background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem) !important;
+    }
+
+    /* 2. Show the "Please select your country" feedback text when invalid */
+    .was-validated #country-input:invalid ~ .invalid-feedback {
+      display: block !important;
     }
   </style>
   <meta name="description"
@@ -117,12 +146,12 @@
 
         <div class="form-note">📅 20–25 August 2026 · Karpenisi, Greece — spots are limited, so register early!</div>
 
-        <!-- Added 'needs-validation' class and 'novalidate' to stop default browser tooltips -->
-        <form id="registrationForm" class="needs-validation" name="registration" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <form id="registrationForm" class="needs-validation" name="registration" method="POST" data-netlify="true"
+          netlify-honeypot="bot-field" novalidate>
           <input type="hidden" name="form-name" value="registration" />
           <input type="hidden" name="subject" value="New registration " />
           <p style="display:none"><label>Don't fill this out: <input name="bot-field" /></label></p>
-          
+
           <div class="row g-3">
             <div class="col-md-6">
               <label for="firstName" class="form-label">First Name</label>
@@ -154,27 +183,52 @@
             <div class="col-md-6">
               <label for="country-input" class="form-label">Country</label>
               <select class="form-select" id="country-input" name="country" required>
-                <option value="">Select a country</option>
-                <option value="Greece">Greece</option>
-                <option value="Cyprus">Cyprus</option>
-                <option value="United States">United States</option>
-                <option value="United Kingdom">United Kingdom</option>
-                <option value="Germany">Germany</option>
-                <option value="France">France</option>
-                <option value="Italy">Italy</option>
-                <option value="Spain">Spain</option>
-                <option value="Canada">Canada</option>
-                <option value="Australia">Australia</option>
-                <option value="Brazil">Brazil</option>
-                <option value="Turkey">Turkey</option>
-                <option value="Serbia">Serbia</option>
-                <option value="Bulgaria">Bulgaria</option>
-                <option value="Romania">Romania</option>
+                <option value=""></option>
                 <option value="Albania">Albania</option>
-                <option value="North Macedonia">North Macedonia</option>
-                <option value="Ukraine">Ukraine</option>
-                <option value="Switzerland">Switzerland</option>
+                <option value="Argentina">Argentina</option>
+                <option value="Australia">Australia</option>
+                <option value="Austria">Austria</option>
+                <option value="Belgium">Belgium</option>
+                <option value="Brazil">Brazil</option>
+                <option value="Bulgaria">Bulgaria</option>
+                <option value="Canada">Canada</option>
+                <option value="China">China</option>
+                <option value="Croatia">Croatia</option>
+                <option value="Cyprus">Cyprus</option>
+                <option value="Czech Republic">Czech Republic</option>
+                <option value="Denmark">Denmark</option>
+                <option value="Egypt">Egypt</option>
+                <option value="Finland">Finland</option>
+                <option value="France">France</option>
+                <option value="Germany">Germany</option>
+                <option value="Greece">Greece</option>
+                <option value="Hungary">Hungary</option>
+                <option value="India">India</option>
+                <option value="Ireland">Ireland</option>
                 <option value="Israel">Israel</option>
+                <option value="Italy">Italy</option>
+                <option value="Japan">Japan</option>
+                <option value="Mexico">Mexico</option>
+                <option value="Netherlands">Netherlands</option>
+                <option value="New Zealand">New Zealand</option>
+                <option value="North Macedonia">North Macedonia</option>
+                <option value="Norway">Norway</option>
+                <option value="Poland">Poland</option>
+                <option value="Portugal">Portugal</option>
+                <option value="Romania">Romania</option>
+                <option value="Saudi Arabia">Saudi Arabia</option>
+                <option value="Serbia">Serbia</option>
+                <option value="Singapore">Singapore</option>
+                <option value="South Africa">South Africa</option>
+                <option value="South Korea">South Korea</option>
+                <option value="Spain">Spain</option>
+                <option value="Sweden">Sweden</option>
+                <option value="Switzerland">Switzerland</option>
+                <option value="Turkey">Turkey</option>
+                <option value="Ukraine">Ukraine</option>
+                <option value="United Arab Emirates">United Arab Emirates</option>
+                <option value="United Kingdom">United Kingdom</option>
+                <option value="United States">United States</option>
               </select>
               <div class="invalid-feedback">Please select your country.</div>
             </div>
@@ -304,8 +358,7 @@
             </div>
 
             <div id="successMessage" class="alert alert-success mt-3 d-none text-center">
-              <!-- Success text is injected via JavaScript now -->
-            </div>
+              </div>
           </div>
         </form>
 
@@ -313,14 +366,16 @@
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+
   <script>
 
     // 1. Define the weight options for each category
     const weightOptions = {
       Kids: ["-27kg", "-30kg", "-33kg", "+33kg"],
-      Cadets: ["W-29kg","W-33kg","W-37kg", "W-41kg", "W-44kg", "W-47kg", "W-51kg","W-55kg","W-59kg","W+59kg", "M-33kg", "M-37kg", "M-41kg", "M-45kg", "M-49kg", "M-53kg", "M-57kg", "M-61kg", "M-65kg", "M+65kg"],
-      Juniors: ["W-42kg", "W-44kg", "W-46kg", "W-49kg", "W-52kg", "W-55kg", "W-59kg", "W-63kg", "W-68kg", "W+68kg","M-45kg", "M-48kg", "M-51kg", "M-55kg", "M-63kg", "M-73kg", "M+73kg"],
-      Seniors: ["W-46kg", "W-49kg", "W-53kg", "W-57KG","W-62kg","W-67kg", "W-73kg", "W+73kg", "M-54kg","M-58kg", "M-63kg", "M-68kg", "M-74kg", "M-80kg", "M-87kg", "M+80kg"]
+      Cadets: ["W-29kg", "W-33kg", "W-37kg", "W-41kg", "W-44kg", "W-47kg", "W-51kg", "W-55kg", "W-59kg", "W+59kg", "M-33kg", "M-37kg", "M-41kg", "M-45kg", "M-49kg", "M-53kg", "M-57kg", "M-61kg", "M-65kg", "M+65kg"],
+      Juniors: ["W-42kg", "W-44kg", "W-46kg", "W-49kg", "W-52kg", "W-55kg", "W-59kg", "W-63kg", "W-68kg", "W+68kg", "M-45kg", "M-48kg", "M-51kg", "M-55kg", "M-63kg", "M-73kg", "M+73kg"],
+      Seniors: ["W-46kg", "W-49kg", "W-53kg", "W-57KG", "W-62kg", "W-67kg", "W-73kg", "W+73kg", "M-54kg", "M-58kg", "M-63kg", "M-68kg", "M-74kg", "M-80kg", "M-87kg", "M+80kg"]
     };
 
     const statusSelect = document.getElementById("status");
@@ -372,35 +427,70 @@
       }
     });
 
-   // 4. Auto-fill Phone Prefix based on Country
+    // 4. Initialize Tom Select & Auto-fill Phone Prefix based on Country
     const countryPrefixes = {
-      "Greece": "+30",
-      "Cyprus": "+357",
-      "United States": "+1",
-      "United Kingdom": "+44",
-      "Germany": "+49",
-      "France": "+33",
-      "Italy": "+39",
-      "Spain": "+34",
-      "Canada": "+1",
-      "Australia": "+61",
-      "Brazil": "+55",
-      "Turkey": "+90",
-      "Serbia": "+381",
-      "Bulgaria": "+359",
-      "Romania": "+40",
       "Albania": "+355",
+      "Argentina": "+54",
+      "Australia": "+61",
+      "Austria": "+43",
+      "Belgium": "+32",
+      "Brazil": "+55",
+      "Bulgaria": "+359",
+      "Canada": "+1",
+      "China": "+86",
+      "Croatia": "+385",
+      "Cyprus": "+357",
+      "Czech Republic": "+420",
+      "Denmark": "+45",
+      "Egypt": "+20",
+      "Finland": "+358",
+      "France": "+33",
+      "Germany": "+49",
+      "Greece": "+30",
+      "Hungary": "+36",
+      "India": "+91",
+      "Ireland": "+353",
+      "Israel": "+972",
+      "Italy": "+39",
+      "Japan": "+81",
+      "Mexico": "+52",
+      "Netherlands": "+31",
+      "New Zealand": "+64",
       "North Macedonia": "+389",
-      "Ukraine": "+380",
+      "Norway": "+47",
+      "Poland": "+48",
+      "Portugal": "+351",
+      "Romania": "+40",
+      "Saudi Arabia": "+966",
+      "Serbia": "+381",
+      "Singapore": "+65",
+      "South Africa": "+27",
+      "South Korea": "+82",
+      "Spain": "+34",
+      "Sweden": "+46",
       "Switzerland": "+41",
-      "Israel": "+972"
+      "Turkey": "+90",
+      "Ukraine": "+380",
+      "United Arab Emirates": "+971",
+      "United Kingdom": "+44",
+      "United States": "+1"
     };
 
-    const countryInput = document.getElementById("country-input");
     const phonePrefixSpan = document.getElementById("phonePrefix");
 
-    countryInput.addEventListener("change", function () {
-      const selectedCountry = this.value;
+    // Initialize Tom Select on the country selection dropdown
+    const countryTomSelect = new TomSelect("#country-input", {
+      create: false,
+      sortField: {
+        field: "text",
+        direction: "asc"
+      },
+      placeholder: "Select a country", // This will show up and vanish dynamically as you type!
+      allowEmptyOption: true
+    });
+
+    // Update phone prefixes using Tom Select's custom 'change' listener
+    countryTomSelect.on('change', function (selectedCountry) {
       const newPrefix = countryPrefixes[selectedCountry];
 
       // Update the uneditable span text instead of the input value
@@ -425,7 +515,7 @@
       if (!form.checkValidity()) {
         e.stopPropagation();
         form.classList.add('was-validated');
-        
+
         const firstInvalid = form.querySelector(':invalid');
         if (firstInvalid) {
           firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -442,10 +532,10 @@
       const formData = new FormData(form);
       const prefix = document.getElementById('phonePrefix').textContent;
       const localPhone = formData.get('phone');
-      
+
       // Combine them cleanly (Netlify will store this nicely)
       const fullPhone = prefix + " " + localPhone;
-      
+
       // Overwrite the 'phone' variable with the full international number
       formData.set('phone', fullPhone);
 
@@ -456,34 +546,38 @@
       })
         .then((response) => {
           if (response.ok) {
-            successMessage.innerText = "✅ Your registration was successful! You will be notified shortly with a confirmation email.";
+            successMessage.innerText = "✅ Your registration was successful!";
             successMessage.classList.remove('d-none');
             successMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            
-            form.reset();
-            form.classList.remove('was-validated');
-            
-            submitBtn.style.display = 'none'; 
 
-            setTimeout(function() {
+            form.reset();
+            
+            // Explicitly clear the autocomplete display when resetting
+            countryTomSelect.clear();
+            
+            form.classList.remove('was-validated');
+
+            submitBtn.style.display = 'none';
+
+            setTimeout(function () {
               successMessage.classList.add('d-none');
-              submitBtn.style.display = 'block'; 
+              submitBtn.style.display = 'block';
               submitBtn.disabled = false;
             }, 5000);
 
           } else {
             alert('⚠ Submission failed. Please try again or contact us directly.');
-            submitBtn.disabled = false; 
+            submitBtn.disabled = false;
           }
         })
         .catch(err => {
           alert('⚠ Submission error: ' + err.message);
-          submitBtn.disabled = false; 
+          submitBtn.disabled = false;
         })
         .finally(() => {
           spinner.style.display = 'none';
         });
-    }); 
+    });
 
   </script>
 
